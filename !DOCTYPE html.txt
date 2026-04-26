@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fairway Finds Golf</title>
+  <style>
+    body {font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f7f6;}
+    header {background:#0a5c2f; color:white; padding:25px; text-align:center;}
+    nav {background:#fff; padding:12px; text-align:center; position:sticky; top:0; box-shadow:0 2px 5px rgba(0,0,0,0.1);}    
+    nav a {margin:0 15px; text-decoration:none; color:#333; font-weight:bold;}
+    section {padding:25px; max-width:1100px; margin:auto;}
+    h2 {margin-bottom:10px;}
+
+    .grid {display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:20px;}
+    .card {background:white; border-radius:12px; overflow:hidden; box-shadow:0 3px 8px rgba(0,0,0,0.08);}    
+    .card img {width:100%; height:160px; object-fit:cover; background:#ddd;}
+    .card-content {padding:15px;}
+    .price {color:#0a5c2f; font-weight:bold;}
+    .tag {display:inline-block; background:#eee; padding:4px 8px; border-radius:5px; font-size:12px; margin-top:5px;}
+
+    .category {margin-bottom:40px;}
+    .category h3 {border-bottom:2px solid #0a5c2f; padding-bottom:5px;}
+
+    .contact-box {background:white; padding:20px; border-radius:12px; box-shadow:0 3px 8px rgba(0,0,0,0.08);}    
+    input, textarea, select {width:100%; padding:10px; margin-top:10px; border-radius:6px; border:1px solid #ccc;}
+    button {margin-top:15px; padding:12px; background:#0a5c2f; color:white; border:none; border-radius:6px; cursor:pointer;}
+
+    footer {background:#0a5c2f; color:white; text-align:center; padding:15px;}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Fairway Finds Golf</h1>
+  <p>Premium New & Used Clubs — Simcoe County & GTA</p>
+</header>
+
+<nav>
+  <a href="#inventory">Inventory</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section id="inventory">
+  <h2>Featured Inventory</h2>
+  <div class="grid">
+
+    <div class="card">
+      <img src="" alt="club">
+      <div class="card-content">
+        <h4>Coming Soon</h4>
+        <p class="price">—</p>
+        <span class="tag">Add New Listing</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="" alt="club">
+      <div class="card-content">
+        <h4>Coming Soon</h4>
+        <p class="price">—</p>
+        <span class="tag">Add New Listing</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="" alt="club">
+      <div class="card-content">
+        <h4>Coming Soon</h4>
+        <p class="price">—</p>
+        <span class="tag">Add New Listing</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>Shop by Category</h2>
+
+  <div class="category">
+    <h3>Drivers</h3>
+    <div class="grid">
+      <div class="card"><div class="card-content"><h4>Low Loft (9–10.5°)</h4></div></div>
+      <div class="card"><div class="card-content"><h4>High Loft (12°+)</h4></div></div>
+      <div class="card"><div class="card-content"><h4>Adjustable</h4></div></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <h3>Woods</h3>
+    <div class="grid">
+      <div class="card"><div class="card-content"><h4>3 Wood</h4></div></div>
+      <div class="card"><div class="card-content"><h4>5 Wood</h4></div></div>
+      <div class="card"><div class="card-content"><h4>Other</h4></div></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <h3>Hybrids</h3>
+    <div class="grid">
+      <div class="card"><div class="card-content"><h4>3 Hybrid</h4></div></div>
+      <div class="card"><div class="card-content"><h4>4 Hybrid</h4></div></div>
+      <div class="card"><div class="card-content"><h4>5+</h4></div></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <h3>Irons</h3>
+    <div class="grid">
+      <div class="card"><div class="card-content"><h4>Long Irons</h4></div></div>
+      <div class="card"><div class="card-content"><h4>Mid Irons</h4></div></div>
+      <div class="card"><div class="card-content"><h4>Full Sets</h4></div></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <h3>Wedges</h3>
+    <div class="grid">
+      <div class="card"><div class="card-content"><h4>Gap Wedge</h4></div></div>
+      <div class="card"><div class="card-content"><h4>Sand Wedge</h4></div></div>
+      <div class="card"><div class="card-content"><h4>Lob Wedge</h4></div></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <h3>Putters</h3>
+    <div class="grid">
+      <div class="card"><div class="card-content"><h4>Blade</h4></div></div>
+      <div class="card"><div class="card-content"><h4>Mallet</h4></div></div>
+      <div class="card"><div class="card-content"><h4>Counterbalanced</h4></div></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <h3>Full Sets</h3>
+    <div class="grid">
+      <div class="card"><div class="card-content"><h4>Beginner</h4></div></div>
+      <div class="card"><div class="card-content"><h4>Intermediate</h4></div></div>
+      <div class="card"><div class="card-content"><h4>Premium</h4></div></div>
+    </div>
+  </div>
+
+</section>
+
+<section id="contact">
+  <h2>Contact / Request a Club</h2>
+  <div class="contact-box">
+    <p><strong>Email:</strong> fairwayfindsgolf1@gmail.com</p>
+    <p><strong>Phone:</strong> <a href="tel:4165649400">416-564-9400</a></p>
+
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <select>
+        <option>Looking For...</option>
+        <option>Driver</option>
+        <option>Irons</option>
+        <option>Wedges</option>
+      </select>
+      <textarea placeholder="Tell us what you want (brand, budget, etc.)"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Fairway Finds Golf</p>
+</footer>
+
+</body>
+</html>
