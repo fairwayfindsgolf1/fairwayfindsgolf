@@ -1,171 +1,465 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fairway Finds Golf</title>
-  <style>
-    body {font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f7f6;}
-    header {background:#0a5c2f; color:white; padding:25px; text-align:center;}
-    nav {background:#fff; padding:12px; text-align:center; position:sticky; top:0; box-shadow:0 2px 5px rgba(0,0,0,0.1);}    
-    nav a {margin:0 15px; text-decoration:none; color:#333; font-weight:bold;}
-    section {padding:25px; max-width:1100px; margin:auto;}
-    h2 {margin-bottom:10px;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fairway Finds Golf — Premium New & Used Clubs</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green-deep:   #0f2d1e;
+    --green-mid:    #1a4a2e;
+    --green-bright: #2d7a4f;
+    --green-light:  #4caf7d;
+    --cream:        #f5f0e8;
+    --cream-dark:   #ede7d9;
+    --gold:         #c9a84c;
+    --gold-light:   #e4c87a;
+    --text-dark:    #0f2d1e;
+    --text-mid:     #3a5a47;
+    --text-light:   #6b8f7a;
+    --white:        #ffffff;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
 
-    .grid {display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:20px;}
-    .card {background:white; border-radius:12px; overflow:hidden; box-shadow:0 3px 8px rgba(0,0,0,0.08);}    
-    .card img {width:100%; height:160px; object-fit:cover; background:#ddd;}
-    .card-content {padding:15px;}
-    .price {color:#0a5c2f; font-weight:bold;}
-    .tag {display:inline-block; background:#eee; padding:4px 8px; border-radius:5px; font-size:12px; margin-top:5px;}
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 72px;
+    background: var(--green-deep);
+    border-bottom: 1px solid rgba(196,168,76,0.25);
+  }
+  .nav-logo-main { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--cream); letter-spacing: 0.5px; display: block; }
+  .nav-logo-sub { font-size: 10px; font-weight: 300; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; display: block; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 400; color: rgba(245,240,232,0.7); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { background: var(--gold) !important; color: var(--green-deep) !important; padding: 8px 20px; border-radius: 2px; font-weight: 500 !important; }
+  .nav-cta:hover { background: var(--gold-light) !important; }
 
-    .category {margin-bottom:40px;}
-    .category h3 {border-bottom:2px solid #0a5c2f; padding-bottom:5px;}
+  /* HERO */
+  .hero {
+    min-height: 100vh; background: var(--green-deep);
+    display: flex; align-items: center; position: relative; overflow: hidden;
+    padding: 120px 48px 80px;
+  }
+  .hero-bg-pattern {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(45,122,79,0.06) 40px, rgba(45,122,79,0.06) 41px),
+      repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(45,122,79,0.06) 40px, rgba(45,122,79,0.06) 41px);
+  }
+  .hero-accent {
+    position: absolute; top: -120px; right: -80px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(45,122,79,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 640px; }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 500; color: var(--gold);
+    letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 6vw, 72px); font-weight: 700; color: var(--cream); line-height: 1.1; margin-bottom: 24px; }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-desc { font-size: 17px; font-weight: 300; color: rgba(245,240,232,0.65); line-height: 1.7; max-width: 480px; margin-bottom: 28px; }
+  .hero-location { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(245,240,232,0.45); margin-bottom: 40px; letter-spacing: 0.5px; }
+  .hero-location svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary { background: var(--gold); color: var(--green-deep); padding: 14px 32px; font-size: 14px; font-weight: 500; text-decoration: none; letter-spacing: 0.5px; border-radius: 2px; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-outline { border: 1px solid rgba(245,240,232,0.3); color: var(--cream); padding: 14px 32px; font-size: 14px; font-weight: 400; text-decoration: none; letter-spacing: 0.5px; border-radius: 2px; transition: border-color 0.2s, color 0.2s, transform 0.15s; display: inline-block; }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-1px); }
+  .hero-right { position: absolute; right: 0; top: 0; bottom: 0; width: 42%; display: flex; align-items: center; justify-content: center; }
+  .hero-svg { width: 85%; max-width: 400px; opacity: 0.8; }
 
-    .contact-box {background:white; padding:20px; border-radius:12px; box-shadow:0 3px 8px rgba(0,0,0,0.08);}    
-    input, textarea, select {width:100%; padding:10px; margin-top:10px; border-radius:6px; border:1px solid #ccc;}
-    button {margin-top:15px; padding:12px; background:#0a5c2f; color:white; border:none; border-radius:6px; cursor:pointer;}
+  /* TRUST BAR */
+  .trust-bar {
+    background: var(--green-mid); border-top: 1px solid rgba(196,168,76,0.2); border-bottom: 1px solid rgba(196,168,76,0.2);
+    padding: 20px 48px; display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap;
+  }
+  .trust-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(245,240,232,0.7); font-weight: 300; }
+  .trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
 
-    footer {background:#0a5c2f; color:white; text-align:center; padding:15px;}
-  </style>
+  /* SECTIONS */
+  section { padding: 100px 48px; }
+  .section-header { text-align: center; margin-bottom: 64px; }
+  .section-eyebrow { font-size: 10px; font-weight: 500; color: var(--green-bright); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 44px); font-weight: 700; color: var(--text-dark); line-height: 1.2; }
+  .section-divider { width: 48px; height: 2px; background: var(--gold); margin: 16px auto 0; }
+
+  /* INVENTORY */
+  #inventory { background: var(--cream); }
+  .inventory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+  .listing-card { background: var(--white); border: 1px solid rgba(15,45,30,0.08); border-radius: 4px; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s; }
+  .listing-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(15,45,30,0.12); }
+  .listing-img-empty {
+    height: 200px;
+    background: repeating-linear-gradient(-45deg, var(--cream-dark), var(--cream-dark) 8px, rgba(15,45,30,0.04) 8px, rgba(15,45,30,0.04) 16px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    border-bottom: 1px dashed rgba(15,45,30,0.15);
+  }
+  .empty-plus { width: 44px; height: 44px; border: 1.5px dashed rgba(15,45,30,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; color: rgba(15,45,30,0.25); }
+  .empty-label { font-size: 12px; font-weight: 400; color: rgba(15,45,30,0.35); letter-spacing: 1px; text-transform: uppercase; }
+  .listing-body { padding: 20px 24px 24px; }
+  .listing-badge { display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 10px; border-radius: 2px; margin-bottom: 10px; }
+  .badge-coming { background: var(--cream-dark); color: var(--text-light); }
+  .listing-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; line-height: 1.3; }
+  .listing-spec { font-size: 13px; color: var(--text-light); margin-bottom: 16px; line-height: 1.5; }
+  .listing-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(15,45,30,0.07); padding-top: 16px; }
+  .listing-price { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--green-mid); }
+
+  /* CATEGORIES */
+  #categories { background: var(--green-deep); }
+  #categories .section-eyebrow { color: var(--gold); }
+  #categories .section-title { color: var(--cream); }
+  #categories .section-divider { background: var(--gold); }
+  .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2px; max-width: 1200px; margin: 0 auto; }
+  .cat-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(245,240,232,0.07); padding: 32px 28px; transition: background 0.2s; }
+  .cat-card:hover { background: rgba(196,168,76,0.08); border-color: rgba(196,168,76,0.2); }
+  .cat-icon { font-size: 28px; margin-bottom: 14px; }
+  .cat-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--cream); margin-bottom: 10px; }
+  .cat-sub { display: flex; flex-direction: column; gap: 5px; }
+  .cat-sub span { font-size: 12px; color: rgba(245,240,232,0.4); font-weight: 300; padding-left: 12px; position: relative; }
+  .cat-sub span::before { content: '–'; position: absolute; left: 0; color: var(--gold); opacity: 0.6; }
+
+  /* ABOUT */
+  #about { background: var(--cream-dark); display: flex; gap: 80px; align-items: center; }
+  .about-text { flex: 1; max-width: 560px; }
+  .about-text .section-header { text-align: left; margin-bottom: 28px; }
+  .about-text .section-divider { margin-left: 0; }
+  .about-body { font-size: 16px; font-weight: 300; color: var(--text-mid); line-height: 1.8; margin-bottom: 24px; }
+  .about-stats { display: flex; gap: 40px; flex-wrap: wrap; padding: 28px 0; border-top: 1px solid rgba(15,45,30,0.1); border-bottom: 1px solid rgba(15,45,30,0.1); margin-bottom: 32px; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--green-mid); line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 12px; font-weight: 400; color: var(--text-light); letter-spacing: 0.5px; }
+  .about-visual { flex: 1; max-width: 440px; background: var(--green-deep); border-radius: 4px; aspect-ratio: 4/5; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .about-svg { width: 80%; max-width: 340px; }
+
+  /* CONTACT */
+  #contact { background: var(--white); }
+  .contact-wrapper { max-width: 860px; margin: 0 auto; text-align: center; }
+  .contact-intro { font-size: 16px; font-weight: 300; color: var(--text-mid); line-height: 1.7; margin-bottom: 56px; max-width: 520px; margin-left: auto; margin-right: auto; }
+  .contact-cards { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 56px; }
+  .contact-card { flex: 1; min-width: 220px; max-width: 260px; background: var(--cream); border: 1px solid rgba(15,45,30,0.08); border-radius: 4px; padding: 36px 24px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
+  .contact-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(15,45,30,0.09); }
+  .contact-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--green-deep); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+  .contact-icon svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .contact-type { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--text-light); margin-bottom: 10px; }
+  .contact-value { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text-dark); line-height: 1.4; text-decoration: none; display: block; }
+  a.contact-value:hover { color: var(--green-bright); }
+  .contact-note { font-size: 12px; color: var(--text-light); margin-top: 8px; font-weight: 300; }
+  .service-area { background: var(--green-deep); border-radius: 4px; padding: 32px 40px; display: inline-flex; align-items: center; gap: 24px; flex-wrap: wrap; justify-content: center; }
+  .service-area-label { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
+  .service-pills { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .service-pill { background: rgba(255,255,255,0.07); border: 1px solid rgba(245,240,232,0.15); color: rgba(245,240,232,0.7); font-size: 13px; font-weight: 300; padding: 6px 16px; border-radius: 2px; }
+
+  /* FOOTER */
+  footer { background: var(--green-deep); border-top: 1px solid rgba(196,168,76,0.2); padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--cream); }
+  .footer-copy { font-size: 12px; color: rgba(245,240,232,0.35); font-weight: 300; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 12px; color: rgba(245,240,232,0.45); text-decoration: none; }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-content > * { animation: fadeUp 0.7s ease both; }
+  .hero-eyebrow  { animation-delay: 0.1s; }
+  .hero h1       { animation-delay: 0.2s; }
+  .hero-desc     { animation-delay: 0.3s; }
+  .hero-location { animation-delay: 0.35s; }
+  .hero-btns     { animation-delay: 0.4s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    section { padding: 72px 24px; }
+    .hero { padding: 100px 24px 64px; }
+    .hero-right { display: none; }
+    .trust-bar { padding: 16px 24px; gap: 24px; }
+    #about { flex-direction: column; }
+    .about-visual { width: 100%; max-width: 100%; aspect-ratio: 16/9; }
+    footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .categories-grid { grid-template-columns: 1fr 1fr; }
+    .contact-cards { flex-direction: column; align-items: center; }
+    .service-area { padding: 24px; }
+  }
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Fairway Finds Golf</h1>
-  <p>Premium New & Used Clubs — Simcoe County & GTA</p>
-</header>
-
+<!-- NAV -->
 <nav>
-  <a href="#inventory">Inventory</a>
-  <a href="#contact">Contact</a>
+  <div>
+    <span class="nav-logo-main">Fairway Finds Golf</span>
+    <span class="nav-logo-sub">Innisfil, Ontario</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#inventory">Inventory</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
 </nav>
 
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Simcoe County &amp; GTA</div>
+    <h1>Premium<br><em>New &amp; Used</em><br>Golf Clubs</h1>
+    <p class="hero-desc">Carefully sourced, honestly graded clubs from top brands — Titleist, Callaway, TaylorMade, Ping and more. Local pickup in Innisfil.</p>
+    <div class="hero-location">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      Innisfil, ON &nbsp;·&nbsp; Local Pickup &nbsp;·&nbsp; Serving Simcoe County &amp; GTA
+    </div>
+    <div class="hero-btns">
+      <a href="#inventory" class="btn-primary">View Inventory</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <svg class="hero-svg" viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="200" cy="445" rx="175" ry="32" fill="rgba(45,122,79,0.28)"/>
+      <ellipse cx="200" cy="445" rx="130" ry="20" fill="rgba(45,122,79,0.22)"/>
+      <line x1="265" y1="185" x2="265" y2="440" stroke="rgba(245,240,232,0.45)" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M265 185 L330 212 L265 238 Z" fill="#c9a84c" opacity="0.9"/>
+      <ellipse cx="265" cy="443" rx="16" ry="6" fill="rgba(15,45,30,0.55)"/>
+      <line x1="78" y1="95" x2="215" y2="392" stroke="rgba(245,240,232,0.7)" stroke-width="5" stroke-linecap="round"/>
+      <rect x="204" y="382" width="44" height="22" rx="4" fill="rgba(245,240,232,0.85)" transform="rotate(-14 204 382)"/>
+      <circle cx="242" cy="435" r="14" fill="white" opacity="0.93"/>
+      <path d="M233,431 Q242,425 251,431" stroke="rgba(15,45,30,0.18)" stroke-width="1" fill="none"/>
+      <path d="M231,438 Q242,432 253,438" stroke="rgba(15,45,30,0.18)" stroke-width="1" fill="none"/>
+      <circle cx="128" cy="198" r="2" fill="#c9a84c" opacity="0.45"/>
+      <circle cx="325" cy="145" r="3" fill="#c9a84c" opacity="0.3"/>
+      <circle cx="88" cy="315" r="2" fill="#c9a84c" opacity="0.35"/>
+    </svg>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item"><span class="trust-dot"></span>Titleist &amp; Callaway Specialists</div>
+  <div class="trust-item"><span class="trust-dot"></span>Every Club Inspected &amp; Graded</div>
+  <div class="trust-item"><span class="trust-dot"></span>Local Pickup — Innisfil, ON</div>
+  <div class="trust-item"><span class="trust-dot"></span>Honest Pricing, No Dealer Markups</div>
+  <div class="trust-item"><span class="trust-dot"></span>New &amp; Used Available</div>
+</div>
+
+<!-- INVENTORY -->
 <section id="inventory">
-  <h2>Featured Inventory</h2>
-  <div class="grid">
-
-    <div class="card">
-      <img src="" alt="club">
-      <div class="card-content">
-        <h4>Coming Soon</h4>
-        <p class="price">—</p>
-        <span class="tag">Add New Listing</span>
+  <div class="section-header">
+    <div class="section-eyebrow">Current Listings</div>
+    <h2 class="section-title">Featured Inventory</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="inventory-grid">
+    <div class="listing-card">
+      <div class="listing-img-empty"><div class="empty-plus">+</div><span class="empty-label">Add Listing</span></div>
+      <div class="listing-body">
+        <span class="listing-badge badge-coming">Coming Soon</span>
+        <div class="listing-name">Your Club Here</div>
+        <div class="listing-spec">Brand · Spec · Condition</div>
+        <div class="listing-footer"><span class="listing-price">—</span></div>
       </div>
     </div>
-
-    <div class="card">
-      <img src="" alt="club">
-      <div class="card-content">
-        <h4>Coming Soon</h4>
-        <p class="price">—</p>
-        <span class="tag">Add New Listing</span>
+    <div class="listing-card">
+      <div class="listing-img-empty"><div class="empty-plus">+</div><span class="empty-label">Add Listing</span></div>
+      <div class="listing-body">
+        <span class="listing-badge badge-coming">Coming Soon</span>
+        <div class="listing-name">Your Club Here</div>
+        <div class="listing-spec">Brand · Spec · Condition</div>
+        <div class="listing-footer"><span class="listing-price">—</span></div>
       </div>
     </div>
-
-    <div class="card">
-      <img src="" alt="club">
-      <div class="card-content">
-        <h4>Coming Soon</h4>
-        <p class="price">—</p>
-        <span class="tag">Add New Listing</span>
+    <div class="listing-card">
+      <div class="listing-img-empty"><div class="empty-plus">+</div><span class="empty-label">Add Listing</span></div>
+      <div class="listing-body">
+        <span class="listing-badge badge-coming">Coming Soon</span>
+        <div class="listing-name">Your Club Here</div>
+        <div class="listing-spec">Brand · Spec · Condition</div>
+        <div class="listing-footer"><span class="listing-price">—</span></div>
       </div>
     </div>
-
+    <div class="listing-card">
+      <div class="listing-img-empty"><div class="empty-plus">+</div><span class="empty-label">Add Listing</span></div>
+      <div class="listing-body">
+        <span class="listing-badge badge-coming">Coming Soon</span>
+        <div class="listing-name">Your Club Here</div>
+        <div class="listing-spec">Brand · Spec · Condition</div>
+        <div class="listing-footer"><span class="listing-price">—</span></div>
+      </div>
+    </div>
+    <div class="listing-card">
+      <div class="listing-img-empty"><div class="empty-plus">+</div><span class="empty-label">Add Listing</span></div>
+      <div class="listing-body">
+        <span class="listing-badge badge-coming">Coming Soon</span>
+        <div class="listing-name">Your Club Here</div>
+        <div class="listing-spec">Brand · Spec · Condition</div>
+        <div class="listing-footer"><span class="listing-price">—</span></div>
+      </div>
+    </div>
+    <div class="listing-card">
+      <div class="listing-img-empty"><div class="empty-plus">+</div><span class="empty-label">Add Listing</span></div>
+      <div class="listing-body">
+        <span class="listing-badge badge-coming">Coming Soon</span>
+        <div class="listing-name">Your Club Here</div>
+        <div class="listing-spec">Brand · Spec · Condition</div>
+        <div class="listing-footer"><span class="listing-price">—</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section>
-  <h2>Shop by Category</h2>
-
-  <div class="category">
-    <h3>Drivers</h3>
-    <div class="grid">
-      <div class="card"><div class="card-content"><h4>Low Loft (9–10.5°)</h4></div></div>
-      <div class="card"><div class="card-content"><h4>High Loft (12°+)</h4></div></div>
-      <div class="card"><div class="card-content"><h4>Adjustable</h4></div></div>
+<!-- CATEGORIES -->
+<section id="categories">
+  <div class="section-header">
+    <div class="section-eyebrow">Browse by Type</div>
+    <h2 class="section-title">Shop by Category</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="categories-grid">
+    <div class="cat-card">
+      <div class="cat-icon">🏌️</div>
+      <div class="cat-name">Drivers</div>
+      <div class="cat-sub"><span>Low Loft (9–10.5°)</span><span>High Loft (12°+)</span><span>Adjustable</span></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🌲</div>
+      <div class="cat-name">Woods</div>
+      <div class="cat-sub"><span>3 Wood</span><span>5 Wood</span><span>Other</span></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">⛳</div>
+      <div class="cat-name">Hybrids</div>
+      <div class="cat-sub"><span>3 Hybrid</span><span>4 Hybrid</span><span>5+</span></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🔩</div>
+      <div class="cat-name">Irons</div>
+      <div class="cat-sub"><span>Long Irons</span><span>Mid Irons</span><span>Full Sets</span></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🔺</div>
+      <div class="cat-name">Wedges</div>
+      <div class="cat-sub"><span>Gap Wedge</span><span>Sand Wedge</span><span>Lob Wedge</span></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🏳️</div>
+      <div class="cat-name">Putters</div>
+      <div class="cat-sub"><span>Blade</span><span>Mallet</span><span>Counterbalanced</span></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🎒</div>
+      <div class="cat-name">Full Sets</div>
+      <div class="cat-sub"><span>Beginner</span><span>Intermediate</span><span>Premium</span></div>
     </div>
   </div>
-
-  <div class="category">
-    <h3>Woods</h3>
-    <div class="grid">
-      <div class="card"><div class="card-content"><h4>3 Wood</h4></div></div>
-      <div class="card"><div class="card-content"><h4>5 Wood</h4></div></div>
-      <div class="card"><div class="card-content"><h4>Other</h4></div></div>
-    </div>
-  </div>
-
-  <div class="category">
-    <h3>Hybrids</h3>
-    <div class="grid">
-      <div class="card"><div class="card-content"><h4>3 Hybrid</h4></div></div>
-      <div class="card"><div class="card-content"><h4>4 Hybrid</h4></div></div>
-      <div class="card"><div class="card-content"><h4>5+</h4></div></div>
-    </div>
-  </div>
-
-  <div class="category">
-    <h3>Irons</h3>
-    <div class="grid">
-      <div class="card"><div class="card-content"><h4>Long Irons</h4></div></div>
-      <div class="card"><div class="card-content"><h4>Mid Irons</h4></div></div>
-      <div class="card"><div class="card-content"><h4>Full Sets</h4></div></div>
-    </div>
-  </div>
-
-  <div class="category">
-    <h3>Wedges</h3>
-    <div class="grid">
-      <div class="card"><div class="card-content"><h4>Gap Wedge</h4></div></div>
-      <div class="card"><div class="card-content"><h4>Sand Wedge</h4></div></div>
-      <div class="card"><div class="card-content"><h4>Lob Wedge</h4></div></div>
-    </div>
-  </div>
-
-  <div class="category">
-    <h3>Putters</h3>
-    <div class="grid">
-      <div class="card"><div class="card-content"><h4>Blade</h4></div></div>
-      <div class="card"><div class="card-content"><h4>Mallet</h4></div></div>
-      <div class="card"><div class="card-content"><h4>Counterbalanced</h4></div></div>
-    </div>
-  </div>
-
-  <div class="category">
-    <h3>Full Sets</h3>
-    <div class="grid">
-      <div class="card"><div class="card-content"><h4>Beginner</h4></div></div>
-      <div class="card"><div class="card-content"><h4>Intermediate</h4></div></div>
-      <div class="card"><div class="card-content"><h4>Premium</h4></div></div>
-    </div>
-  </div>
-
 </section>
 
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text">
+    <div class="section-header">
+      <div class="section-eyebrow">Our Story</div>
+      <h2 class="section-title">Two Guys Who Love Golf</h2>
+      <div class="section-divider"></div>
+    </div>
+    <p class="about-body">Based right here in Innisfil, we're two passionate golfers who started Fairway Finds to make quality clubs accessible to everyone — from first-time players to seasoned low-handicappers. Every club we list has been personally inspected and graded so you know exactly what you're getting.</p>
+    <p class="about-body">We serve buyers and sellers across Simcoe County and the GTA. Whether you're upgrading your bag or selling clubs you no longer play, we're here to help with honest advice and fair prices.</p>
+    <div class="about-stats">
+      <div><div class="stat-num">100%</div><div class="stat-label">Clubs Inspected</div></div>
+      <div><div class="stat-num">GTA</div><div class="stat-label">Service Area</div></div>
+      <div><div class="stat-num">Local</div><div class="stat-label">Pickup · Innisfil</div></div>
+    </div>
+  </div>
+  <div class="about-visual">
+    <svg class="about-svg" viewBox="0 0 320 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="160" cy="362" rx="128" ry="26" fill="rgba(45,122,79,0.28)"/>
+      <line x1="160" y1="142" x2="160" y2="360" stroke="rgba(245,240,232,0.4)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M160 142 L228 170 L160 198 Z" fill="#c9a84c" opacity="0.85"/>
+      <ellipse cx="160" cy="362" rx="13" ry="5" fill="rgba(15,45,30,0.5)"/>
+      <line x1="58" y1="58" x2="172" y2="337" stroke="rgba(245,240,232,0.65)" stroke-width="5" stroke-linecap="round"/>
+      <rect x="160" y="328" width="36" height="18" rx="4" fill="rgba(245,240,232,0.8)" transform="rotate(-12 160 328)"/>
+      <circle cx="186" cy="355" r="12" fill="white" opacity="0.9"/>
+      <path d="M178,352 Q186,347 194,352" stroke="rgba(15,45,30,0.2)" stroke-width="1" fill="none"/>
+      <path d="M177,358 Q186,353 195,358" stroke="rgba(15,45,30,0.2)" stroke-width="1" fill="none"/>
+      <circle cx="88" cy="158" r="2" fill="#c9a84c" opacity="0.4"/>
+      <circle cx="248" cy="100" r="2.5" fill="#c9a84c" opacity="0.3"/>
+    </svg>
+  </div>
+</section>
+
+<!-- CONTACT -->
 <section id="contact">
-  <h2>Contact / Request a Club</h2>
-  <div class="contact-box">
-    <p><strong>Email:</strong> fairwayfindsgolf1@gmail.com</p>
-    <p><strong>Phone:</strong> <a href="tel:4165649400">416-564-9400</a></p>
+  <div class="contact-wrapper">
+    <div class="section-header">
+      <div class="section-eyebrow">Reach Out</div>
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="section-divider"></div>
+    </div>
+    <p class="contact-intro">Have a club to sell? Looking for something specific? Ready to buy? Reach out anytime — we're happy to help match you to the right club.</p>
 
-    <form>
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <select>
-        <option>Looking For...</option>
-        <option>Driver</option>
-        <option>Irons</option>
-        <option>Wedges</option>
-      </select>
-      <textarea placeholder="Tell us what you want (brand, budget, etc.)"></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="contact-type">Email</div>
+        <a href="mailto:fairwayfindsgolf1@gmail.com" class="contact-value">fairwayfindsgolf1@gmail.com</a>
+        <div class="contact-note">We typically reply within a few hours</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        </div>
+        <div class="contact-type">Phone / Text</div>
+        <a href="tel:4165649400" class="contact-value">416-564-9400</a>
+        <div class="contact-note">Call or text anytime</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <div class="contact-type">Location</div>
+        <span class="contact-value" style="cursor:default;">Innisfil, Ontario</span>
+        <div class="contact-note">Local pickup available</div>
+      </div>
+    </div>
+
+    <div class="service-area">
+      <span class="service-area-label">We Serve</span>
+      <div class="service-pills">
+        <span class="service-pill">Innisfil</span>
+        <span class="service-pill">Barrie</span>
+        <span class="service-pill">Bradford</span>
+        <span class="service-pill">Newmarket</span>
+        <span class="service-pill">Toronto &amp; GTA</span>
+        <span class="service-pill">Simcoe County</span>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <p>© 2026 Fairway Finds Golf</p>
+  <div class="footer-brand">Fairway Finds Golf</div>
+  <div class="footer-links">
+    <a href="#inventory">Inventory</a>
+    <a href="#categories">Categories</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Fairway Finds Golf · Innisfil, ON</div>
 </footer>
 
 </body>
